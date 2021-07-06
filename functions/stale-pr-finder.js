@@ -4,10 +4,12 @@ const config = require('./config').config;
 exports.findStalePRs = findStalePRs;
 
 async function findStalePRs() {
+  debugger;
   const prs = await findStalePRsOnGitHub();
 
   const result = [];
   for (const pr of prs) {
+    try {
       const reviewerEmail = await findReviewerEmailAtYoutrack(pr);
 
       result.push({
@@ -16,6 +18,9 @@ async function findStalePRs() {
         author: pr.user.login,
         reviewer: reviewerEmail,
       });
+    } catch (error) {
+      debugger;
+    }
   }
   return result;
 }
@@ -67,17 +72,21 @@ async function findReviewerEmailAtYoutrack(pr) {
   const instance = createYoutrackHttpClient();
   const issueLinkRegexp = /https\:\/\/akveo\.myjetbrains\.com\/youtrack\/issue\/(UIB\_DEV\_UB\-\d*)/g;
   const matches = issueLinkRegexp.exec(pr.body);
-  const youtrackTicketId = matches && matches.length ? matches[1] : null;
-  const youtrackIssueRes = await instance.get('/issues/' + youtrackTicketId, {
-    params: {
-      fields: '$type,id,summary,customFields($type,id,projectCustomField($type,id,field($type,id,name)),value($type,id,email))',
-    },
-  });
-  const youtrackIssue = youtrackIssueRes.data;
-  const assigneeField = youtrackIssue.customFields.find(field => field.projectCustomField.field.name === 'Assignee');
+  if (matches && matches.length) {
+    const youtrackTicketId = matches[1];
+    const youtrackIssueRes = await instance.get('/issues/' + youtrackTicketId, {
+      params: {
+        fields: '$type,id,summary,customFields($type,id,projectCustomField($type,id,field($type,id,name)),value($type,id,email))',
+      },
+    });
+    const youtrackIssue = youtrackIssueRes.data;
+    const assigneeField = youtrackIssue.customFields.find(field => field.projectCustomField.field.name === 'Assignee');
 
-  return assigneeField.value.email;
-}
+    return assigneeField.value.email;
+  } else {
+    return null;
+  }
+} 
 
 function createYoutrackHttpClient() {
   return axios.create({

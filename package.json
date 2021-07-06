@@ -7,7 +7,7 @@
     "run": "node ./index.js",
     "start": "npm run start:local",
     "start:local": "ENVIRONMENT=local npm run run",
-    "start:dev": "ENVIRONMENT=dev, npm run run",
+    "start:dev": "ENVIRONMENT=dev npm run run",
     "deploy": "ENVIRONMENT=local firebase deploy"
   },
   "keywords": [],
