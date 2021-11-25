@@ -1,3 +1,9 @@
+# Getting started
+
+1. npm install -g firebase-tools
+
+# How to test
+
 curl \
   -H "Authorization: Bearer " \
   -d email="n.poltoratsky@akveo.com" \

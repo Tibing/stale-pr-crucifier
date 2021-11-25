@@ -16,7 +16,7 @@
     "axios": "^0.21.1",
     "chalk": "^4.1.1",
     "firebase-admin": "^9.8.0",
-    "firebase-functions": "^3.14.1"
+    "firebase-functions": "^3.16.0"
   },
   "devDependencies": {
     "firebase-functions-test": "^0.2.0"

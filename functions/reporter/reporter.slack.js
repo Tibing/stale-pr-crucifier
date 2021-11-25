@@ -51,7 +51,6 @@ function getPRAuthorText(author) {
     'nnixaa': '<@U2UGV343F>',
     'sashaqred': '<@U011LDX8JA0>',
     'mmfKupl': '<@USFN3PCDU>',
-    'Roma36': '<@UN9HLTSFJ>',
     'stas-karmanov': '<@U024W3Z1NN4>',
   }
 
@@ -64,7 +63,6 @@ function getPRReviewerText(authorSlackId, reviewer) {
     'a.demeshko@akveo.com': '<@U2UT5BV47>',
     'd.nehaychik@akveo.com': '<@U2UGV343F>',
     'i.kuplevich@akveo.com': '<@USFN3PCDU>',
-    'r.grinovski@akveo.com': '<@UN9HLTSFJ>',
     'a.verbilo@akveo.com': '<@U011LDX8JA0>',
     'stanislav.karmanov@akveo.com': '<@U024W3Z1NN4>',
   };
@@ -72,11 +70,11 @@ function getPRReviewerText(authorSlackId, reviewer) {
   const reviewerSlackId = youtrackEmailToSlackIdMapping[reviewer];
 
   if (authorSlackId === reviewerSlackId) {
-    return `${reviewerSlackId} Какого-то хуя`
+    return `${reviewerSlackId} Заассайни ПР на кого-нибудь уже`
   }
 
   if (!reviewerSlackId) {
-    return `А вот нет там никакого ревьюера какого-то хуя`
+    return `А вот нет там никакого ревьюера`
   }
 
   return reviewerSlackId;
